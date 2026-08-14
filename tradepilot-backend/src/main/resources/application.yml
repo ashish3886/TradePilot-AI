@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: tradepilot-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/tradepilot
+    username: tradepilot
+    password: tradepilot123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+server:
+  port: 8080
