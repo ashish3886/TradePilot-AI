@@ -20,4 +20,8 @@ management:
         include: health,info
 
 server:
-  port: 8080
+  port: 8081
+
+
+  flyway:
+    enabled: true
