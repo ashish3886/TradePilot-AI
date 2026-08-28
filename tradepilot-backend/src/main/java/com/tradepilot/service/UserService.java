@@ -4,8 +4,11 @@ package com.tradepilot.service;
 import com.tradepilot.dto.CreateUserRequest;
 import com.tradepilot.dto.UserResponse;
 import com.tradepilot.entity.User;
+import com.tradepilot.exception.DuplicateResourceException;
+import com.tradepilot.exception.ResourceNotFoundException;
 import com.tradepilot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,22 +17,26 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public UserResponse createUser(CreateUserRequest request) {
 
         if (userRepository.existsByUsername(request.username())) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new DuplicateResourceException(
+                    "Username already exists");
         }
 
         if (userRepository.existsByEmail(request.email())) {
-            throw new IllegalArgumentException("Email already exists");
+            throw new DuplicateResourceException(
+                    "Email already exists");
         }
 
         User user = User.builder()
                 .username(request.username())
                 .email(request.email())
-                .passwordHash(request.password()) // temporary
+                .passwordHash(passwordEncoder.encode(request.password()))
+                .role("USER")
                 .build();
 
         User savedUser = userRepository.save(user);
@@ -47,7 +54,11 @@ public class UserService {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("User not found: " + id));
+                        new ResourceNotFoundException(
+                                "User not found: " + id
+                        ));
+
+
 
         return new UserResponse(
                 user.getId(),

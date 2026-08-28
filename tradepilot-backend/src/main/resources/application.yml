@@ -22,6 +22,9 @@ management:
 server:
   port: 8081
 
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 3600000
 
   flyway:
     enabled: true
