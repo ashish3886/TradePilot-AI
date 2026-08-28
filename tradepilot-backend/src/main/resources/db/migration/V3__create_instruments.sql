@@ -11,6 +11,10 @@ CREATE TABLE instruments (
 
     active BOOLEAN NOT NULL DEFAULT TRUE,
 
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
     CONSTRAINT uk_instrument_symbol
         UNIQUE (symbol)
 );
