@@ -1,0 +1,2 @@
+ALTER TABLE market_candles
+ALTER COLUMN timeframe TYPE VARCHAR(20);
