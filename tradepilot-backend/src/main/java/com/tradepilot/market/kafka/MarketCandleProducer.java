@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MarketCandleProducer {
 
-    private final KafkaTemplate<String, MarketCandleEvent> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void publish(MarketCandleEvent event) {
 

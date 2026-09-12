@@ -31,7 +31,6 @@ spring:
 
       properties:
         spring.json.trusted.packages: com.tradepilot.market.event
-        spring.json.value.default.type: com.tradepilot.market.event.MarketCandleEvent
 
 management:
   endpoints:
